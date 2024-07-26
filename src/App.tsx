@@ -1,7 +1,14 @@
+import { RouterProvider } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
+import { router } from './routes'
+import { defaultTheme } from './styles/themes/default'
+import { GlobalStyle } from './styles/global'
+
 export function App() {
   return (
-    <div>
-      <h1>Helloww</h1>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <RouterProvider router={router} />
+      <GlobalStyle />
+    </ThemeProvider>
   )
 }

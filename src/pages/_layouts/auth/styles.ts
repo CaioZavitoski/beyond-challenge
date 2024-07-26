@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const AuthContainer = styled.div`
-  display: none;
+  display: flex;
   min-height: 100vh;
   flex-direction: column;
   align-items: center;
@@ -9,11 +9,8 @@ export const AuthContainer = styled.div`
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (min-width: 768px) {
-    display: grid;
-  }
-
   @media (min-width: 1024px) {
+    display: grid;
     max-width: none;
     grid-template-columns: 1fr 1fr;
     padding: 0;

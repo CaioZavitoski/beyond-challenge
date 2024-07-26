@@ -21,4 +21,13 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 1rem;
   }
+
+  [data-sonner-toast] {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    border-radius: 0.25rem;
+  }
+
 `

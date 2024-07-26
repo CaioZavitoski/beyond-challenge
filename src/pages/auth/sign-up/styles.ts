@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const AuthContainer = styled.div`
+export const SignUpContainer = styled.div`
   position: relative;
   padding: 2rem;
 
@@ -42,7 +42,7 @@ export const SignUpLink = styled.div`
   }
 `
 
-export const FormContainer = styled.div`
+export const SignUpFormContainer = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -53,40 +53,40 @@ export const FormContainer = styled.div`
   text-align: center;
 `
 
-export const Title = styled.h1`
+export const SignUpTitle = styled.h1`
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: -0.02em;
 `
 
-export const Description = styled.p`
+export const SignUpDescription = styled.p`
   font-size: 1rem;
   line-height: 1.4;
   color: ${(props) => props.theme['gray-500']};
 `
 
-export const FormGrid = styled.form`
+export const SignUpFormGrid = styled.form`
   display: grid;
   gap: 1rem;
 `
 
-export const InputGroup = styled.div`
+export const SignUpInputGroup = styled.div`
   display: grid;
   gap: 0.5rem;
 `
 
-export const Label = styled.label`
+export const SignUpLabel = styled.label`
   text-align: left;
   font-size: 0.875rem;
 `
 
-export const Input = styled.input`
+export const SignUpInput = styled.input`
   padding: 0.5rem;
   border: 1px solid ${(props) => props.theme['gray-200']};
   border-radius: 0.25rem;
 `
 
-export const Button = styled.button`
+export const SignUpButton = styled.button`
   padding: 0.5rem 1rem;
   background-color: ${(props) => props.theme['green-500']};
   color: #fff;
@@ -104,8 +104,10 @@ export const Button = styled.button`
   }
 `
 
-export const TermsText = styled.p`
+export const SignUpTermsText = styled.p`
   font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
   color: ${(props) => props.theme['gray-500']};
 
   a {

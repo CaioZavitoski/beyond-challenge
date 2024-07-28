@@ -1,11 +1,25 @@
-import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { Header } from '../../../components/Header'
 
 export function AppLayout() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!document.cookie.includes('auth=')) {
+      navigate('/sign-in', { replace: true })
+    }
+
+    return () => {}
+  }, [navigate])
+
+  if (!document.cookie.includes('auth=')) return null
+
   return (
-    <div className='flex min-h-screen flex-col antialiased'>
+    <div>
       <Header />
-      <div className='flex flex-1 flex-col gap-4 p-8 pt-6'>
+
+      <div>
         <Outlet />
       </div>
     </div>

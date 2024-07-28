@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { signIn } from '../../../api/sign-in'
@@ -24,6 +24,7 @@ type SignInSchema = z.infer<typeof signInSchema>
 
 export function SignIn() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -44,6 +45,8 @@ export function SignIn() {
     try {
       await authenticate({ email })
       toast.success('Login efetuado com sucesso! Redirecionando...')
+      await new Promise((resolve) => setTimeout(resolve, 4000))
+      navigate('/')
     } catch (err) {
       toast.error('E-mail não encontrado. Tente novamente.')
     }

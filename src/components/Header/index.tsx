@@ -2,25 +2,30 @@ import { Home, LogOut, User, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import { NavLink } from '../NavLink'
 import {
-    DropdownItem,
-    DropdownMenu,
-    HeaderContainer,
-    HeaderContent,
-    Navigation,
-    ProfileDropdown,
-    Separator,
-    Spacer,
+  DropdownItem,
+  DropdownMenu,
+  HeaderContainer,
+  HeaderContent,
+  Navigation,
+  ProfileDropdown,
+  Separator,
+  Spacer,
 } from './styles'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 export function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false)
+  const navigate = useNavigate()
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!isDropdownOpen)
   }
 
   const handleLogout = () => {
-    console.log('Logging out...')
+    document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    toast.success('Logout efetuado com sucesso!')
+    navigate('/sign-in', { replace: true })
   }
 
   return (
@@ -45,7 +50,7 @@ export function Header() {
               <DropdownMenu>
                 <DropdownItem onClick={handleLogout}>
                   <LogOut />
-                  Sair
+                  <span>Sair</span>
                 </DropdownItem>
               </DropdownMenu>
             )}

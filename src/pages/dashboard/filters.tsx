@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useDebounce } from 'use-debounce'
 import { FilterButton, FiltersContainer, Input, Select } from './styles'
 
 interface FiltersProps {
@@ -25,13 +27,20 @@ export function Filters({
   setFilters,
   setSearchParams,
 }: FiltersProps) {
+  const [debouncedFilters] = useDebounce(filters, 2000)
+
+  useEffect(() => {
+    setFilters(debouncedFilters)
+  }, [debouncedFilters, setFilters])
+
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    setFilters({
-      ...filters,
-      [e.target.name]: e.target.value,
-    })
+    const { name, value } = e.target
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }))
   }
 
   const handleClearFilters = () => {

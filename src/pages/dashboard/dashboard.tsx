@@ -1,14 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import { getClients } from '../../api/get-clients'
 import { Spinner } from '../../components/Spinner'
-import { ClientsTable } from './clients-table'
-import { Filters } from './filters'
+
 import { DashboardContainer, NoResults } from './styles'
+import { useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
+import { ClientsContext } from '../../contexts/ClientsContext'
+import { Filters } from './filters'
+import { ClientsTable } from './clients-table'
+import { Modal } from '../../components/Modal'
 
 export function Dashboard() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { clients, setClients } = useContext(ClientsContext)
 
   const [filters, setFilters] = useState({
     id: searchParams.get('id') || '',
@@ -37,6 +41,12 @@ export function Dashboard() {
       }),
   })
 
+  useEffect(() => {
+    if (result) {
+      setClients(result.clients)
+    }
+  }, [result])
+
   return (
     <DashboardContainer>
       <h1>Clientes</h1>
@@ -47,13 +57,14 @@ export function Dashboard() {
       />
       {isLoadingOrders ? (
         <Spinner />
-      ) : result && result.clients.length > 0 ? (
-        <ClientsTable clients={result.clients} />
+      ) : clients.length > 0 ? (
+        <ClientsTable clients={clients} />
       ) : (
         <NoResults>
           Nenhum cliente encontrado com os filtros aplicados.
         </NoResults>
       )}
+      <Modal />
     </DashboardContainer>
   )
 }

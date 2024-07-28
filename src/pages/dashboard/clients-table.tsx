@@ -1,4 +1,6 @@
 import { Search, SquarePen, Trash2 } from 'lucide-react'
+import { useContext } from 'react'
+import { ClientsContext } from '../../contexts/ClientsContext'
 import {
   ActionButton,
   ButtonGroup,
@@ -24,12 +26,19 @@ interface ClientsTableProps {
 }
 
 export function ClientsTable({ clients }: ClientsTableProps) {
+  const { setSelectedClient, setModalType } = useContext(ClientsContext)
+
+  const openModal = (type: 'details' | 'edit' | 'delete', client: Client) => {
+    setSelectedClient(client)
+    setModalType(type)
+  }
+
   return (
     <ClientsTableContainer>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableCell></TableCell>
+            <TableCell>ID</TableCell>
             <TableCell>Nome</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Telefone</TableCell>
@@ -49,19 +58,24 @@ export function ClientsTable({ clients }: ClientsTableProps) {
                   {client.status}
                 </StatusBadge>
               </TableCell>
-              <TableCell
-                style={{
-                  width: '1%',
-                }}
-              >
+              <TableCell style={{ width: '1%' }}>
                 <ButtonGroup>
-                  <ActionButton variant='details'>
+                  <ActionButton
+                    variant='details'
+                    onClick={() => openModal('details', client)}
+                  >
                     <Search />
                   </ActionButton>
-                  <ActionButton variant='edit'>
+                  <ActionButton
+                    variant='edit'
+                    onClick={() => openModal('edit', client)}
+                  >
                     <SquarePen />
                   </ActionButton>
-                  <ActionButton variant='delete'>
+                  <ActionButton
+                    variant='delete'
+                    onClick={() => openModal('delete', client)}
+                  >
                     <Trash2 />
                   </ActionButton>
                 </ButtonGroup>

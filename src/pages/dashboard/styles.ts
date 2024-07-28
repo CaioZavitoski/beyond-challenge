@@ -3,14 +3,14 @@ import styled from 'styled-components'
 export const DashboardContainer = styled.div`
   padding: 1rem;
   color: ${(props) => props.theme.black};
-  margin-top: 1rem;
+  margin-top: 0%.5;
 `
 
 export const FiltersContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 `
 
 export const Input = styled.input`
@@ -18,6 +18,7 @@ export const Input = styled.input`
   border: 1px solid ${(props) => props.theme['gray-200']};
   border-radius: 0.25rem;
   color: ${(props) => props.theme['gray-800']};
+  width: 16rem;
 `
 
 export const Select = styled.select`
@@ -26,7 +27,6 @@ export const Select = styled.select`
   border: 1px solid ${(props) => props.theme['gray-200']};
   border-radius: 0.25rem;
   width: 200px;
-
   color: ${(props) => props.theme['gray-500']};
 `
 
@@ -120,7 +120,6 @@ export const ActionButton = styled.button<ActionButtonProps>`
   justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  width: 50px;
 
   border: none;
   border-radius: 0.25rem;

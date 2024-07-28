@@ -1,5 +1,12 @@
 import styled from 'styled-components'
 
+export const StyledSpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+`
+
 export const StyledSpinner = styled.div`
   border: 16px solid ${(props) => props.theme['green-800']};
   border-top: 16px solid ${(props) => props.theme['green-500']};

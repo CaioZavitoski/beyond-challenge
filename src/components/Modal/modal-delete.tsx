@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-
+import { toast } from 'sonner'
 import { z } from 'zod'
+import { deleteClient as deleteClientApi } from '../../api/delete-client'
 import { ClientsContext } from '../../contexts/ClientsContext'
 import { ModalActions, ModalContent, ModalHeader } from './styles'
 
@@ -17,16 +19,33 @@ const clientSchema = z.object({
 export type ClientSchema = z.infer<typeof clientSchema>
 
 export function ModalDelete() {
-  const { selectedClient, setModalType, setSelectedClient } =
+  const { selectedClient, setModalType, setSelectedClient, deleteClient } =
     useContext(ClientsContext)
 
   const { setValue } = useForm<ClientSchema>({
     resolver: zodResolver(clientSchema),
   })
 
+  const { mutateAsync: deleteClientMutation } = useMutation({
+    mutationFn: deleteClientApi,
+  })
+
   function closeModal() {
     setModalType(null)
     setSelectedClient(null)
+  }
+
+  async function handleDelete() {
+    try {
+      if (selectedClient) {
+        await deleteClientMutation(selectedClient.id)
+        deleteClient(selectedClient.id)
+        toast.success('Cliente deletado com sucesso!')
+        closeModal()
+      }
+    } catch (error) {
+      toast.error('Erro ao deletar cliente. Tente novamente.')
+    }
   }
 
   useEffect(() => {
@@ -49,7 +68,7 @@ export function ModalDelete() {
         <button className='cancel' onClick={closeModal}>
           Cancelar
         </button>
-        <button className='delete' onClick={() => closeModal()}>
+        <button className='delete' onClick={handleDelete}>
           Deletar
         </button>
       </ModalActions>

@@ -11,7 +11,7 @@ export interface Client {
 export interface State {
   clients: Client[]
   selectedClient: Client | null
-  modalType: 'details' | 'edit' | 'delete' | null
+  modalType: 'details' | 'edit' | 'delete' | 'add' | null
 }
 
 export const initialState: State = {
@@ -34,6 +34,13 @@ export const clientsReducer = (state: State, action: Action): State => {
         clients: state.clients.map((client) =>
           client.id === action.payload.id ? action.payload : client,
         ),
+      }
+    case ActionTypes.ADD_CLIENT:
+      return { ...state, clients: [...state.clients, action.payload] }
+    case ActionTypes.DELETE_CLIENT:
+      return {
+        ...state,
+        clients: state.clients.filter((client) => client.id !== action.payload),
       }
     default:
       return state

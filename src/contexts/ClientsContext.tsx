@@ -1,24 +1,28 @@
-import { createContext, ReactNode, useEffect, useReducer } from 'react'
+import { createContext, ReactNode, useReducer } from 'react'
+import {
+  Client,
+  clientsReducer,
+  initialState,
+  State,
+} from '../reducers/clients/reducer'
 import {
   setClientsAction,
   setModalTypeAction,
   setSelectedClientAction,
   updateClientAction,
+  addClientAction,
+  deleteClientAction,
 } from '../reducers/clients/action'
-import {
-  Client,
-  clientsReducer,
-  initialState,
-} from '../reducers/clients/reducer'
 
-interface ClientsContextType {
-  clients: Client[]
-  selectedClient: Client | null
-  modalType: 'details' | 'edit' | 'delete' | null
+interface ClientsContextType extends State {
   setClients: (clients: Client[]) => void
   setSelectedClient: (client: Client | null) => void
-  setModalType: (modalType: 'details' | 'edit' | 'delete' | null) => void
+  setModalType: (
+    modalType: 'details' | 'edit' | 'delete' | 'add' | null,
+  ) => void
   updateClients: (client: Client) => void
+  addClient: (client: Client) => void
+  deleteClient: (id: string) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -30,23 +34,6 @@ interface ClientsProviderProps {
 export function ClientsProvider({ children }: ClientsProviderProps) {
   const [state, dispatch] = useReducer(clientsReducer, initialState)
 
-  useEffect(() => {
-    const storedStateAsJSON = localStorage.getItem(
-      '@client-crud:clients-state-1.0.0',
-    )
-
-    if (storedStateAsJSON) {
-      dispatch(setClientsAction(JSON.parse(storedStateAsJSON).clients))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem(
-      '@client-crud:clients-state-1.0.0',
-      JSON.stringify(state),
-    )
-  }, [state])
-
   function setClients(clients: Client[]) {
     dispatch(setClientsAction(clients))
   }
@@ -55,7 +42,9 @@ export function ClientsProvider({ children }: ClientsProviderProps) {
     dispatch(setSelectedClientAction(client))
   }
 
-  function setModalType(modalType: 'details' | 'edit' | 'delete' | null) {
+  function setModalType(
+    modalType: 'details' | 'edit' | 'delete' | 'add' | null,
+  ) {
     dispatch(setModalTypeAction(modalType))
   }
 
@@ -63,16 +52,24 @@ export function ClientsProvider({ children }: ClientsProviderProps) {
     dispatch(updateClientAction(client))
   }
 
+  function addClient(client: Client) {
+    dispatch(addClientAction(client))
+  }
+
+  function deleteClient(id: string) {
+    dispatch(deleteClientAction(id))
+  }
+
   return (
     <ClientsContext.Provider
       value={{
-        clients: state.clients,
-        selectedClient: state.selectedClient,
-        modalType: state.modalType,
+        ...state,
         setClients,
         setSelectedClient,
         setModalType,
         updateClients,
+        addClient,
+        deleteClient,
       }}
     >
       {children}

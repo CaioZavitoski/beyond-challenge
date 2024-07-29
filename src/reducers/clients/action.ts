@@ -5,6 +5,8 @@ export enum ActionTypes {
   SET_SELECTED_CLIENT = 'SET_SELECTED_CLIENT',
   SET_MODAL_TYPE = 'SET_MODAL_TYPE',
   UPDATE_CLIENT = 'UPDATE_CLIENT',
+  ADD_CLIENT = 'ADD_CLIENT',
+  DELETE_CLIENT = 'DELETE_CLIENT',
 }
 
 interface SetClientsAction {
@@ -19,7 +21,7 @@ interface SetSelectedClientAction {
 
 interface SetModalTypeAction {
   type: ActionTypes.SET_MODAL_TYPE
-  payload: 'details' | 'edit' | 'delete' | null
+  payload: 'details' | 'edit' | 'delete' | 'add' | null
 }
 
 interface UpdateClientAction {
@@ -27,11 +29,23 @@ interface UpdateClientAction {
   payload: Client
 }
 
+interface AddClientAction {
+  type: ActionTypes.ADD_CLIENT
+  payload: Client
+}
+
+interface DeleteClientAction {
+  type: ActionTypes.DELETE_CLIENT
+  payload: string
+}
+
 export type Action =
   | SetClientsAction
   | SetSelectedClientAction
   | SetModalTypeAction
   | UpdateClientAction
+  | AddClientAction
+  | DeleteClientAction
 
 export const setClientsAction = (clients: Client[]): SetClientsAction => ({
   type: ActionTypes.SET_CLIENTS,
@@ -46,7 +60,7 @@ export const setSelectedClientAction = (
 })
 
 export const setModalTypeAction = (
-  modalType: 'details' | 'edit' | 'delete' | null,
+  modalType: 'details' | 'edit' | 'delete' | 'add' | null,
 ): SetModalTypeAction => ({
   type: ActionTypes.SET_MODAL_TYPE,
   payload: modalType,
@@ -55,4 +69,14 @@ export const setModalTypeAction = (
 export const updateClientAction = (client: Client): UpdateClientAction => ({
   type: ActionTypes.UPDATE_CLIENT,
   payload: client,
+})
+
+export const addClientAction = (client: Client): AddClientAction => ({
+  type: ActionTypes.ADD_CLIENT,
+  payload: client,
+})
+
+export const deleteClientAction = (id: string): DeleteClientAction => ({
+  type: ActionTypes.DELETE_CLIENT,
+  payload: id,
 })

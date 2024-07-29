@@ -1,5 +1,5 @@
 import { Home, LogOut, User, UserPlus } from 'lucide-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { NavLink } from '../NavLink'
 import {
   DropdownItem,
@@ -13,9 +13,11 @@ import {
 } from './styles'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { ClientsContext } from '../../contexts/ClientsContext'
 
 export function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false)
+  const { setSelectedClient, setModalType } = useContext(ClientsContext)
   const navigate = useNavigate()
 
   const handleDropdownToggle = () => {
@@ -28,6 +30,11 @@ export function Header() {
     navigate('/sign-in', { replace: true })
   }
 
+  const handleAddClient = () => {
+    setSelectedClient(null)
+    setModalType('add')
+  }
+
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -38,10 +45,10 @@ export function Header() {
             <Home />
             Início
           </NavLink>
-          <NavLink to='/add-client'>
+          <div onClick={handleAddClient}>
             <UserPlus />
             Adicionar Cliente
-          </NavLink>
+          </div>
         </Navigation>
         <Spacer>
           <ProfileDropdown onClick={handleDropdownToggle}>

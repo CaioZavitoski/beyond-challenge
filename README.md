@@ -18,7 +18,6 @@ This project is a simple CRUD application for managing clients. It is built with
 - Add, edit, delete, and view client details.
 - Filter and search clients by various fields.
 - Fully responsive design.
-- Mocked backend using MSW.
 - Integration tests with Jest and Testing Library.
 
 ## Technologies
@@ -41,7 +40,7 @@ This project is a simple CRUD application for managing clients. It is built with
 ### Prerequisites
 
 - Node.js (>= 14.x)
-- npm or pnpm
+- pnpm
 
 ### Installation
 

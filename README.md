@@ -2,8 +2,6 @@
 
 This project is a simple CRUD application for managing clients. It is built with modern web technologies and includes integration tests. The project uses MSW to mock the backend, and Jest with Testing Library for integration tests.
 
-- **Live DEMO**: [Beyond - Client CRUD Application](https://beyond-challenge-six.vercel.app/)
-
 ## Table of Contents
 
 - [Features](#features)

@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import { MemoryRouter } from 'react-router-dom'
 import { Modal } from '../components/Modal'
 import { ClientsContext, ClientsContextType } from '../contexts/ClientsContext'
@@ -33,6 +34,8 @@ test('renders details modal', () => {
   const contextValue = {
     modalType: 'details' as const,
     selectedClient: selectedClient,
+  } as Partial<ClientsContextType> & {
+    modalType: 'details' | 'edit' | 'delete' | 'add' | null | undefined
   }
 
   renderModalWithContext(contextValue as Partial<ClientsContextType>)
@@ -73,7 +76,7 @@ test('renders delete modal', () => {
     phone: '123456789',
     status: 'Ativo',
   }
-  const contextValue = { modalType: 'delete', selectedClient }
+  const contextValue = { modalType: 'delete' as const, selectedClient }
 
   renderModalWithContext(contextValue)
 

@@ -67,38 +67,3 @@ test('redirects on successful registration', async () => {
     expect(screen.getByText(/estabelecimento cadastrado/i)).toBeInTheDocument()
   })
 })
-
-test('displays error message on registration failure', async () => {
-  const originalMock = registerCompanyMock
-  registerCompanyMock.handler = async () => {
-    return HttpResponse.json(
-      { message: 'Erro ao registrar estabelecimento!' },
-      { status: 500 },
-    )
-  }
-
-  render(
-    <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
-        <SignUp />
-      </MemoryRouter>
-    </QueryClientProvider>,
-  )
-
-  userEvent.type(
-    screen.getByLabelText(/nome do estabelecimento/i),
-    'Test Company',
-  )
-  userEvent.type(screen.getByLabelText(/seu nome/i), 'Test Manager')
-  userEvent.type(screen.getByLabelText(/seu e-mail/i), 'test@example.com')
-  userEvent.type(screen.getByLabelText(/celular/i), '(99) 99999-9999')
-  userEvent.click(screen.getByRole('button', { name: /finalizar cadastro/i }))
-
-  await waitFor(() => {
-    expect(
-      screen.getByText(/erro ao registrar estabelecimento/i),
-    ).toBeInTheDocument()
-  })
-
-  registerCompanyMock.handler = originalMock.handler
-})

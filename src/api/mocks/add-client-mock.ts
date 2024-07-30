@@ -32,7 +32,8 @@ export const addClientMock = http.post<AddClientBody>(
     }
 
     const id = `cliente-${clients.clients.length + 1}`
-    const client = { id, ...newClient }
+    Object.assign(newClient, { id })
+    const client = { ...(newClient as Client) }
     clients.clients.push(client)
     return HttpResponse.json(client)
   },

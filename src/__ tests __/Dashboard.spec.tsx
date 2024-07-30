@@ -55,19 +55,23 @@ test('filters clients based on input', async () => {
 
   await waitFor(() => {
     expect(screen.getAllByRole('row').length).toBe(2)
-})
-
-test('displays no results message when no clients match filters', async () => {
-  renderDashboard()
-
-  await waitFor(() => {
-    expect(screen.getByText(/cliente-1/i)).toBeInTheDocument()
   })
 
-  userEvent.type(screen.getByPlaceholderText(/nome do cliente/i), 'NonExistent')
-  userEvent.click(screen.getByRole('button', { name: /remover filtros/i }))
+  test('displays no results message when no clients match filters', async () => {
+    renderDashboard()
 
-  await waitFor(() => {
-    expect(screen.getByText(/nenhum cliente encontrado/i)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText(/cliente-1/i)).toBeInTheDocument()
+    })
+
+    userEvent.type(
+      screen.getByPlaceholderText(/nome do cliente/i),
+      'NonExistent',
+    )
+    userEvent.click(screen.getByRole('button', { name: /remover filtros/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText(/nenhum cliente encontrado/i)).toBeInTheDocument()
+    })
   })
 })

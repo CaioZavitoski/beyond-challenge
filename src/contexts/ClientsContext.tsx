@@ -14,7 +14,7 @@ import {
   deleteClientAction,
 } from '../reducers/clients/action'
 
-interface ClientsContextType extends State {
+export interface ClientsContextType extends State {
   setClients: (clients: Client[]) => void
   setSelectedClient: (client: Client | null) => void
   setModalType: (
